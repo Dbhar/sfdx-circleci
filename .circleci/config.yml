@@ -15,6 +15,10 @@ jobs:
       # from https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli_standalone.htm
       # and https://developer.salesforce.com/media/salesforce-cli/manifest.json
       - DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+      - HUB_SFDX_USER: devashish.vhardwaj476@agentforce.com
+      - DECRYPTION_KEY: 7110EDA4D09E062AA5E4A390B0A572AC0D2C0220FDCD11E0D3807C2005BA7E1E
+      - DECRYPTION_IV: 687D8551274F1884C382C201AC6DDA41
+      - HUB_CONSUMER_KEY: 3MVG9dAEux2v1sLvDuGJeYxUU3SbUT35gwFpIyS4GAFcX57FjCb_aAbLynJI47lKue9.mhz7zq9qOoGj7D6tT
     steps:
       - checkout
       - run:
@@ -45,7 +49,7 @@ jobs:
           name: Setup Org
           command: |
             echo 'Running tests'
-            sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile assets/server.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
+            sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile assets/server.key --username $HUB_SFDX_USER --setdefaultdevhubusername -a hub
             sfdx force --help
             sfdx force:org:create -s -f ~/ci_app/config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM --wait 2
             sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
